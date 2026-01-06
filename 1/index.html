@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        aside {
+            width: 300px;
+            height: 100vh;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .title {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            margin-top: 20px;
+            margin-left: 25px;
+        }
+
+        .title>div {
+            border-radius: 10px;
+            border: 0;
+            background-color: #024846;
+            width: 35px;
+            height: 35px;
+        }
+
+        .title>div img {
+            margin: 6px;
+        }
+
+        .title>h1 {
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        nav {
+            margin-top: 30px;
+        }
+
+        .home,
+        .archived {
+            display: flex;
+            padding: 7px;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            gap: 5px;
+            width: 260px;
+            padding-left: 15px;
+            margin-left: 18px;
+        }
+
+        .home img,
+        .archived img {
+            width: 26px;
+        }
+
+        .home {
+            border: 0;
+            border-radius: 10px;
+            background-color: #e8f1f0;
+        }
+
+        .tags {
+            margin-top: 30px;
+            margin-left: 32px;
+        }
+
+        .tags>h4 {
+            opacity: 0.6;
+            font-size: 14px;
+        }
+
+        .tags_list>input {
+            width: 20px;
+            height: 20px;
+            margin-top: 35px;
+            margin-right: 10px;
+        }
+
+        .tags_num {
+            margin-top: -30px;
+            margin-left: 210px;
+            text-align: center;
+            line-height: 25px;
+            border: 0;
+            border-radius: 100%;
+            width: 25px;
+            height: 25px;
+            background-color: #e8f1f0;
+        }
+
+        .tags_list>span {
+            font-weight: 600;
+        }
+
+        main {
+            width: 100%;
+            padding-left: 300px;
+        }
+
+        header {
+            width: 100%;
+            height: 80px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 800px;
+        }
+
+        search input {
+            background: url("img/search.png") top left no-repeat;
+            background-size: 25px;
+            background-position: 15px;
+            margin-left: 35px;
+            height: 47px;
+            padding-left: 45px;
+            width: 450px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0px 1px #ddd;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header_right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .add_bookmark {
+            display: flex;
+            background-color: #024846;
+            border: 0;
+            gap: 10px;
+            color: white;
+            font-size: 18px;
+            padding: 20px;
+            height: 50px;
+            line-height: 10px;
+            width: 200px;
+            border-radius: 10px;
+        }
+
+        .profile {
+            width: 50px;
+            border-radius: 100%;
+            transition: 0.15s;
+        }
+
+        .profile:hover {
+            border: 2px solid cyan;
+        }
+
+        section {
+            padding: 40px;
+            background-color: #e8f1f0;
+        }
+
+        section div>h1 {
+            margin-top: 1.5vh;
+            margin-bottom: 3.5vh;
+        }
+
+        .section_head {
+            display: flex;
+            align-items: center;
+            gap: 1165px;
+            white-space: nowrap;
+        }
+
+        .sort_by {
+            margin-bottom: 15px;
+            height: 50px;
+            display: flex;
+            padding: 10px;
+            border: 2px solid #ddd;
+            background-color: #fff;
+            border-radius: 10px;
+            align-items: center;
+            gap: 4px;
+
+        }
+
+        .sort_by>img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .item-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 300px;
+            gap: 30px;
+        }
+
+        .item-list hr{
+            border: 1px solid #ddd;
+        }
+
+        .item {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0px 2px #ddd;
+            width: 470px;
+        }
+
+        .item_container{
+            margin: 20px;
+        }
+        
+        .item_header{
+            display: flex;
+            margin-bottom: 18px;
+        }
+
+        .item_logo{
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .item_title{
+            line-height: 0px;
+            margin-left: 15px;
+            font-size: 14px;
+            color: grey;
+        }
+
+        .item_title h1{
+            color: black;
+            margin-top: 20px;
+            margin-bottom: 27px;
+        }
+
+        .item_desc{
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .item_more{
+            position: absolute;
+            margin-left: 395px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .item_tags{
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .item_tags > div{
+            border: 0;
+            border-radius: 5px;
+            background-color: #e8f1f0;
+            padding: 5px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .item_info{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-left: 15px;
+            margin-top: 10px;
+            bottom: 10px;
+            font-size: 14px;
+            gap: 15px;
+        }
+
+        .item_info > img{
+            width: 15px;
+            height: 15px;
+        }
+
+        .item_pin{
+            margin-left: 175px;
+        }
+        
+        .item_pin > img{
+            height: 20px;
+            width: 25px;
+        }
+
+        @media screen and (max-width: 600px){
+            
+        }
+    </style>
+</head>
+
+<body>
+    <aside>
+        <div class="title">
+            <div><img src="img/bookmark2.png" alt="로고"></div>
+            <h1>Bookmark Manager</h1>
+        </div>
+
+        <nav>
+            <div class="home"><img src="img/home.png" alt="홈">Home</div>
+            <div class="archived"><img src="img/archived.png" alt="아카이브">Archived</div>
+            <div class="tags">
+                <h4 class="tags_txt">TAGS</h4>
+                <div class="tags_list"><input type="checkbox"><span>AI</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">5</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+                <div class="tags_list"><input type="checkbox"><span>Community</span>
+                    <div class="tags_num">1</div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <search>
+                <input type="search" placeholder="Search by title...">
+            </search>
+            <div class="header_right">
+                <button class="add_bookmark">
+                    <h1>+</h1> Add Bookmark
+                </button>
+                <a href="https://github.com/unityjack0972"><img src="img/nana.png" alt="" class="profile"></a>
+            </div>
+        </header>
+
+        <section>
+            <div class="section_head">
+                <h1>All bookmarks</h1>
+                <button class="sort_by"><img src="img/sort.png" alt="분류">
+                    <h2>Sort by</h2>
+                </button>
+            </div>
+
+            <div class="item-list">
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item_container">
+                        <div class="item_header">
+                            <img src="img/item1.png" alt="아이템" class="item_logo">
+                            <div class="item_title">
+                                <h1>Frontend Mentor</h1>
+                                <p>frontendmentor.io</p>
+                            </div>
+                            <img src="img/more.png" alt="더보기" class="item_more">
+                        </div>
+                        <hr>
+                        <p class="item_desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint dolores perferendis quia
+                            cumque, sunt at mollitia incidunt similique voluptas exercitationem repellat, delectus
+                            asperiores, suscipit dolore! Enim, id! Tempore, ea dolor?</p>
+                        <div class="item_tags">
+                            <div>Practice</div>
+                            <div>Learning</div>
+                            <div>Community</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="item_info">
+                        <img src="img/view.png" alt="조회수">
+                        <div class="info_txt">47</div>
+                        <img src="img/date.png" alt="날짜">
+                        <div class="info_txt">23 Sep</div>
+                        <img src="img/calendar.png" alt="달력">
+                        <div class="info_txt">18 Feb</div>
+                        
+                        <div class="item_pin"><img src="img/pin.png" alt="고정"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
