@@ -20,8 +20,8 @@ body:has(#cb:checked) {
 
 .toggle-btn{
     margin: auto;
-    text-align: start;
     width: 100px;
+    height: 40px;
     font-size: 24px;
     margin-top: 430px;
     background-color: darkgrey;
@@ -34,15 +34,13 @@ label{
     cursor: pointer;
     user-select: none;
 }
-.light { display: inline; }
-.dark { display: none; }
-
-body:has(#cb:checked) .light {
-    display: none;
-}
-
-body:has(#cb:checked) .dark{
-    display: inline;
+.light > div {
+    display: block;
+    background-color: white;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    margin: 3px;
 }
 
 body:has(#cb:checked) *{
@@ -50,10 +48,14 @@ body:has(#cb:checked) *{
 }
 
 body:has(#cb:checked) .toggle-btn{
-    padding-left: 65px;
     border: 2px solid rgb(9, 9, 91);
     background-color: darkblue;
     box-shadow: 0px -3px blue;
+}
+
+body:has(#cb:checked) .light>div{
+    margin-left: 63px;
+    background-color: yellow;
 }
 
 p{
