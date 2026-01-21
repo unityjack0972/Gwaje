@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("/3/선수제공파일/A9/images/background.png");
+}
+
+.slide-container {
+    display: flex;
+    width: 1500px;
+    height: 100%;
+    margin: auto;
+    margin-top: 200px;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider {
+    display: flex;
+    width: 300%;
+    transition: all 0.4s;
+}
+
+.slide-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.slide-content>img {
+    width: 350px;
+}
+
+.slide-desc {
+    margin-top: 20px;
+    font-weight: 400;
+    color: white;
+}
+
+.slide-desc-title-kr{
+    font-size: 24px;
+    margin-bottom: 5px;
+    font-weight: 300;
+}
+
+.slide-desc-date{
+    margin-top: 2px;
+    color: rgb(168, 168, 168);
+}
+
+.slide-ctrl {
+    margin-top: 50px;
+    display: none;
+    gap: 15px;
+}
+
+.slide-ctrl-btn {
+    font-size: 30px;
+    color: white;
+    border: 1px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.slide-ctrl-btn:active {
+    background-color: rgba(239, 239, 239, 0.697);
+}
+
+[name="slide"] {
+    display: none;
+}
+
+#slide1:checked ~ .slide-container .slider {
+    transform: translateX(33.333%);
+}
+#slide2:checked ~ .slide-container .slider {
+    transform: translateX(0);
+}
+#slide3:checked ~ .slide-container .slider {
+    transform: translateX(-33.333%);
+}
+
+#slide1:checked ~ .slide-container .slide-ctrl-container .slide1,
+#slide2:checked ~ .slide-container .slide-ctrl-container .slide2,
+#slide3:checked ~ .slide-container .slide-ctrl-container .slide3 {
+    display: flex;
+}

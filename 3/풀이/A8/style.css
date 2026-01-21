@@ -1,0 +1,149 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(237, 237, 237);
+    font-family: sans-serif;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.cart-container{
+    margin: auto;
+    margin-top: 150px;
+    width: 850px;
+    background-color: white;
+    box-shadow: 0px 0px 5px grey;
+    border-radius: 10px;
+}
+
+.cart-header{
+    background-color: rgb(49, 49, 49);
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.cart-title{
+    color: white;
+}
+
+.cart-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.cart-left{
+    display: flex;
+    gap: 15px;
+}
+
+.cart-right{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-item-img > img{
+    border-radius: 10px;
+    width: 70px;
+    height: 80px;
+}
+
+.cart-item-context{
+    color: rgb(164, 164, 164);
+}
+
+.cart-item-name{
+    color: black;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.quantity{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.qty-btn > button{
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 10px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.item-price-qty{
+    line-height: 10px;
+}
+
+.cancel-btn > button{
+    width: 34px;
+    height: 35px;
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 30px;
+    margin-bottom: 5px;
+    line-height: 10px;
+}
+
+.cart-list-hr{
+    border: 1px solid rgb(231, 231, 231);
+}
+
+.cart-buy-container{
+    padding: 20px;
+    background-color: rgb(241, 241, 241);
+}
+
+.cart-buy-top,
+.cart-buy-bottom{
+    display: flex;
+    justify-content: space-between;
+    line-height: 30px;
+}
+
+.cart-buy-hr{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid rgb(213, 213, 213);
+}
+
+.bottom-btns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.continue-btn > button, .order-btn > button{
+    height: 45px;
+    color: rgb(235, 235, 235);
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.continue-btn > button{
+    width: 120px;
+    background-color: rgb(125, 131, 139);
+}
+
+.order-btn > button{
+    width: 100px;
+    background-color: rgb(15, 162, 15);
+}
