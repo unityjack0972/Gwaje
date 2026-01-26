@@ -1,0 +1,44 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.settings, .logout{
+  cursor: pointer;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  margin: auto;
+  margin-top: 400px;
+  gap: 10px;
+}
+
+.settings-tooltip, .logout-tooltip{
+  position: absolute;
+  border-radius: 5px;
+  background-color: rgb(37, 37, 37);
+  padding: 5px;
+  color: white;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s;
+  font-size: 12px;
+}
+
+.settings-tooltip{
+  margin-top: -3%;
+  margin-left: -14%;
+}
+
+.logout-tooltip{
+  margin-left: 1%;
+}
+
+.active:hover, .active:hover .active, .active:focus, .active:focus .active{
+  opacity: 1;
+  visibility: visible;
+}
